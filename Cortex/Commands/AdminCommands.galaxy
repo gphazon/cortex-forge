@@ -1,29 +1,17 @@
-// Cortex SC2 Roleplaying Engine
-// Copyright (C) 2009-2011 <http://www.cortexrp.com/>
-//
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation; version 2 of the License.
-// 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-
-bool libcrtx_command_ban(bool testConds, bool runActions)
+void libapex_command_ban(void testConds, void runActions)
 {
 	int player;
 	unitgroup g;
-	string val = StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 2 );
-	player = libcrtx_color_to_player( val );
+	string val = StringWord( libapex_chat_get_parse_line(EventPlayer()), 2 );
+	player = libapex_color_to_player( val );
 	if( player == -1 || PlayerType(player) != c_playerTypeUser) {
 		return true;
 	}
 
-	if( !libcrtx_admin_haspermissions( EventPlayer(), player, libcrtx_admin_permissionlevel_moderator ) && !libcrtx_command_allowed(EventPlayer(), StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 1))) {
+	if( !libapex_admin_haspermissions( EventPlayer(), player, libapex_admin_permissionlevel_moderator ) && !libapex_command_allowed(EventPlayer(), StringWord(libapex_chat_get_parse_line(EventPlayer()), 1))) {
 		return true;
 	}
-	else if(libcrtx_admin_getpermissions(EventPlayer()) < libcrtx_admin_getpermissions(player) || EventPlayer() == player) {
+	else if(libapex_admin_getpermissions(EventPlayer()) < libapex_admin_getpermissions(player) || EventPlayer() == player) {
 		return true;
 	}
 	
@@ -32,121 +20,121 @@ bool libcrtx_command_ban(bool testConds, bool runActions)
 	UnitGroupLoopBegin(g);
 	while( !UnitGroupLoopDone() )
 	{
-		libcrtx_unitCache_remove(UnitGroupLoopCurrent());
+		libapex_unitCache_remove(UnitGroupLoopCurrent());
 		UnitRemove( UnitGroupLoopCurrent() );
 		UnitGroupLoopStep();
 	}
 	UnitGroupLoopEnd();
 	
-	libcrtx_write_text(PlayerGroupAll(), libcrtx_colored_player_name(player) + StringToText(" has been banned by ") + libcrtx_colored_player_name(EventPlayer()));
+	libapex_write_text(PlayerGroupAll(), libapex_colored_player_name(player) + StringToText(" has been banned by ") + libapex_colored_player_name(EventPlayer()));
 	return true;
 }
 
-bool libcrtx_command_disable(bool testConds, bool runActions)
+void libapex_command_disable(void testConds, void runActions)
 {
 	int player;
-	string val = StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 2 );
-	player = libcrtx_color_to_player( val );
+	string val = StringWord( libapex_chat_get_parse_line(EventPlayer()), 2 );
+	player = libapex_color_to_player( val );
 	if( player == -1 || PlayerType(player) != c_playerTypeUser) {
 		return true;
 	}
 
-	if( !libcrtx_admin_haspermissions( EventPlayer(), player, libcrtx_admin_permissionlevel_moderator ) && !libcrtx_command_allowed(EventPlayer(), StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 1))) {
+	if( !libapex_admin_haspermissions( EventPlayer(), player, libapex_admin_permissionlevel_moderator ) && !libapex_command_allowed(EventPlayer(), StringWord(libapex_chat_get_parse_line(EventPlayer()), 1))) {
 		return true;
 	}
-	else if(libcrtx_admin_getpermissions(EventPlayer()) < libcrtx_admin_getpermissions(player) || EventPlayer() == player) {
+	else if(libapex_admin_getpermissions(EventPlayer()) < libapex_admin_getpermissions(player) || EventPlayer() == player) {
 		return true;
 	}
 
-	libcrtx_admin_disablecommands( player );
+	libapex_admin_disablecommands( player );
 	
-	libcrtx_write_text(PlayerGroupAll(), libcrtx_colored_player_name(player) + StringToText(" has had his commands disabled by ") + libcrtx_colored_player_name(EventPlayer()));
+	libapex_write_text(PlayerGroupAll(), libapex_colored_player_name(player) + StringToText(" has had his commands disabled by ") + libapex_colored_player_name(EventPlayer()));
 	return true;	
 }
 
-bool libcrtx_command_enable(bool testConds, bool runActions)
+void libapex_command_enable(void testConds, void runActions)
 {
 	int player;
-	string val = StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 2 );
-	player = libcrtx_color_to_player( val );
+	string val = StringWord( libapex_chat_get_parse_line(EventPlayer()), 2 );
+	player = libapex_color_to_player( val );
 	if( player == -1 || PlayerType(player) != c_playerTypeUser ) {
 		return true;
 	}
 
-	if( !libcrtx_admin_haspermissions( EventPlayer(), player, libcrtx_admin_permissionlevel_moderator ) && !libcrtx_command_allowed(EventPlayer(), StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 1))) {
+	if( !libapex_admin_haspermissions( EventPlayer(), player, libapex_admin_permissionlevel_moderator ) && !libapex_command_allowed(EventPlayer(), StringWord(libapex_chat_get_parse_line(EventPlayer()), 1))) {
 		return true;
 	}
-	else if(libcrtx_admin_getpermissions(EventPlayer()) < libcrtx_admin_getpermissions(player) || EventPlayer() == player) {
+	else if(libapex_admin_getpermissions(EventPlayer()) < libapex_admin_getpermissions(player) || EventPlayer() == player) {
 		return true;
 	}
 
-	libcrtx_admin_enablecommands( player );
+	libapex_admin_enablecommands( player );
 	
-	libcrtx_write_text(PlayerGroupAll(), libcrtx_colored_player_name(player) + StringToText(" has had his commands enabled by ") + libcrtx_colored_player_name(EventPlayer()));
+	libapex_write_text(PlayerGroupAll(), libapex_colored_player_name(player) + StringToText(" has had his commands enabled by ") + libapex_colored_player_name(EventPlayer()));
 	return true;	
 }
 
-bool libcrtx_command_promote(bool testConds, bool runActions)
+void libapex_command_promote(void testConds, void runActions)
 {
 	int player;
-	string val = StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 2 );
-	player = libcrtx_color_to_player( val );
+	string val = StringWord( libapex_chat_get_parse_line(EventPlayer()), 2 );
+	player = libapex_color_to_player( val );
 	if( player == -1 || PlayerType(player) != c_playerTypeUser) {
 		return true;
 	}
 
-	if( !libcrtx_admin_haspermissions( EventPlayer(), player, libcrtx_admin_permissionlevel_admin ) && !libcrtx_command_allowed(EventPlayer(), StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 1))) {
+	if( !libapex_admin_haspermissions( EventPlayer(), player, libapex_admin_permissionlevel_admin ) && !libapex_command_allowed(EventPlayer(), StringWord(libapex_chat_get_parse_line(EventPlayer()), 1))) {
 		return true;
 	}
-	else if(libcrtx_admin_getpermissions(player) >= libcrtx_admin_permissionlevel_moderator) {
+	else if(libapex_admin_getpermissions(player) >= libapex_admin_permissionlevel_moderator) {
 		return true;
 	}
 	
-	libcrtx_admin_setpermission( player, libcrtx_admin_permissionlevel_moderator );
+	libapex_admin_setpermission( player, libapex_admin_permissionlevel_moderator );
 	
-	libcrtx_write_text(PlayerGroupAll(), libcrtx_colored_player_name(player) + StringToText(" has been promoted to moderator by ") + libcrtx_colored_player_name(EventPlayer()));
+	libapex_write_text(PlayerGroupAll(), libapex_colored_player_name(player) + StringToText(" has been promoted to moderator by ") + libapex_colored_player_name(EventPlayer()));
 	return true;	
 }
 
-bool libcrtx_command_demote(bool testConds, bool runActions)
+void libapex_command_demote(void testConds, void runActions)
 {
 	int player;
-	string val = StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 2 );
-	player = libcrtx_color_to_player( val );
+	string val = StringWord( libapex_chat_get_parse_line(EventPlayer()), 2 );
+	player = libapex_color_to_player( val );
 	if( player == -1 || PlayerType(player) != c_playerTypeUser) {
 		return true;
 	}
 
-	if( !libcrtx_admin_haspermissions( EventPlayer(), player, libcrtx_admin_permissionlevel_admin ) && !libcrtx_command_allowed(EventPlayer(), StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 1))) {
+	if( !libapex_admin_haspermissions( EventPlayer(), player, libapex_admin_permissionlevel_admin ) && !libapex_command_allowed(EventPlayer(), StringWord(libapex_chat_get_parse_line(EventPlayer()), 1))) {
 		return true;
 	}
-	else if(libcrtx_admin_getpermissions(player) < libcrtx_admin_permissionlevel_moderator) {
+	else if(libapex_admin_getpermissions(player) < libapex_admin_permissionlevel_moderator) {
 		return true;
 	}
 
-	libcrtx_admin_setpermission( player, libcrtx_admin_permissionlevel_none );
+	libapex_admin_setpermission( player, libapex_admin_permissionlevel_none );
 	
-	libcrtx_write_text(PlayerGroupAll(), libcrtx_colored_player_name(player) + StringToText(" has been demoted to user by ") + libcrtx_colored_player_name(EventPlayer()));
+	libapex_write_text(PlayerGroupAll(), libapex_colored_player_name(player) + StringToText(" has been demoted to user by ") + libapex_colored_player_name(EventPlayer()));
 	return true;	
 }
 
-bool libcrtx_command_adminremove(bool testConds, bool runActions)
+void libapex_command_adminremove(void testConds, void runActions)
 {
 	int player;
 	unitgroup g;
-	string val = StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 2 );
-	player = libcrtx_color_to_player( val );
+	string val = StringWord( libapex_chat_get_parse_line(EventPlayer()), 2 );
+	player = libapex_color_to_player( val );
 	if( player == -1 ) {
 		return true;
 	}
 
-	if( !libcrtx_admin_haspermissions( EventPlayer(), player, libcrtx_admin_permissionlevel_moderator ) && EventPlayer() != player && !libcrtx_command_allowed(EventPlayer(), StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 1))) {
+	if( !libapex_admin_haspermissions( EventPlayer(), player, libapex_admin_permissionlevel_moderator ) && EventPlayer() != player && !libapex_command_allowed(EventPlayer(), StringWord(libapex_chat_get_parse_line(EventPlayer()), 1))) {
 		return true;
 	}
-	else if(libcrtx_admin_getpermissions(EventPlayer()) < libcrtx_admin_permissionlevel_moderator && !libcrtx_command_allowed(EventPlayer(), StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 1))) {
+	else if(libapex_admin_getpermissions(EventPlayer()) < libapex_admin_permissionlevel_moderator && !libapex_command_allowed(EventPlayer(), StringWord(libapex_chat_get_parse_line(EventPlayer()), 1))) {
 		return true;
 	}
-	else if(libcrtx_admin_getpermissions(EventPlayer()) < libcrtx_admin_getpermissions(player)) {
+	else if(libapex_admin_getpermissions(EventPlayer()) < libapex_admin_getpermissions(player)) {
 		return true;
 	}
 	
@@ -154,100 +142,100 @@ bool libcrtx_command_adminremove(bool testConds, bool runActions)
 	UnitGroupLoopBegin(g);
 	while( !UnitGroupLoopDone() )
 	{
-		if( UnitGetType( UnitGroupLoopCurrent() ) != libcrtx_getspawnertype() ) {
-			libcrtx_unitCache_remove(UnitGroupLoopCurrent());
+		if( UnitGetType( UnitGroupLoopCurrent() ) != libapex_getspawnertype() ) {
+			libapex_unitCache_remove(UnitGroupLoopCurrent());
 			UnitRemove( UnitGroupLoopCurrent() );
 		}
 		UnitGroupLoopStep();
 	}
 	UnitGroupLoopEnd();
 	
-	libcrtx_write_text(PlayerGroupAll(), libcrtx_colored_player_name(player) + StringToText(" has been removed by ") + libcrtx_colored_player_name(EventPlayer()));
+	libapex_write_text(PlayerGroupAll(), libapex_colored_player_name(player) + StringToText(" has been removed by ") + libapex_colored_player_name(EventPlayer()));
 	return true;	
 }
 
-revealer[libcrtx_max_players] libcrtx_command_seeall_revealers;
-bool libcrtx_command_seeall(bool testConds, bool runActions)
+revealer[libapex_max_players] libapex_command_seeall_revealers;
+void libapex_command_seeall(void testConds, void runActions)
 {
 	int i = 1;
 	string state;
-	bool revealed;
-	state = StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 2 );
-	if( libcrtx_admin_getpermissions( EventPlayer() ) < libcrtx_admin_permissionlevel_moderator && !libcrtx_command_allowed(EventPlayer(), StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 1))) {
+	void revealed;
+	state = StringWord( libapex_chat_get_parse_line(EventPlayer()), 2 );
+	if( libapex_admin_getpermissions( EventPlayer() ) < libapex_admin_permissionlevel_moderator && !libapex_command_allowed(EventPlayer(), StringWord(libapex_chat_get_parse_line(EventPlayer()), 1))) {
 		return true;
 	}
 
 	if( state == "off" ) { 
-		while( i != libcrtx_max_players ) {
-			if( libcrtx_command_seeall_revealers[i] ) {
-				VisRevealerDestroy( libcrtx_command_seeall_revealers[i] );
-				libcrtx_command_seeall_revealers[i] = null;
+		while( i != libapex_max_players ) {
+			if( libapex_command_seeall_revealers[i] ) {
+				VisRevealerDestroy( libapex_command_seeall_revealers[i] );
+				libapex_command_seeall_revealers[i] = null;
 			}
 			i = i + 1;
 		}
-		libcrtx_write_text(PlayerGroupAll(), StringToText("The map has been hidden by ") + libcrtx_colored_player_name(EventPlayer()) + StringToText("."));
+		libapex_write_text(PlayerGroupAll(), StringToText("The map has been hidden by ") + libapex_colored_player_name(EventPlayer()) + StringToText("."));
 	} else if( state == "on" ) {
-		while( i != libcrtx_max_players ) {
-			if( libcrtx_command_seeall_revealers[i] == null ) {
-				libcrtx_command_seeall_revealers[i] = VisRevealerCreate( i, RegionEntireMap() );
+		while( i != libapex_max_players ) {
+			if( libapex_command_seeall_revealers[i] == null ) {
+				libapex_command_seeall_revealers[i] = VisRevealerCreate( i, RegionEntireMap() );
 			}
 			i = i + 1;
 		}
-		libcrtx_write_text(PlayerGroupAll(), StringToText("The map has been revealed by ") + libcrtx_colored_player_name(EventPlayer()) + StringToText("."));
+		libapex_write_text(PlayerGroupAll(), StringToText("The map has been revealed by ") + libapex_colored_player_name(EventPlayer()) + StringToText("."));
 	} else {
 		// toggle.
-		while( i != libcrtx_max_players ) {
-			if( libcrtx_command_seeall_revealers[i] == null ) {
-				libcrtx_command_seeall_revealers[i] = VisRevealerCreate( i, RegionEntireMap() );
+		while( i != libapex_max_players ) {
+			if( libapex_command_seeall_revealers[i] == null ) {
+				libapex_command_seeall_revealers[i] = VisRevealerCreate( i, RegionEntireMap() );
 				revealed = true;
 			} else {
-				VisRevealerDestroy( libcrtx_command_seeall_revealers[i] );
-				libcrtx_command_seeall_revealers[i] = null;
+				VisRevealerDestroy( libapex_command_seeall_revealers[i] );
+				libapex_command_seeall_revealers[i] = null;
 				revealed = false;
 			}
 			i = i + 1;
 		}
 		
 		if( revealed ) {
-			libcrtx_write_text(PlayerGroupAll(), StringToText("The map has been revealed by ") + libcrtx_colored_player_name(EventPlayer()) + StringToText("."));
+			libapex_write_text(PlayerGroupAll(), StringToText("The map has been revealed by ") + libapex_colored_player_name(EventPlayer()) + StringToText("."));
 		} else {
-			libcrtx_write_text(PlayerGroupAll(), StringToText("The map has been hidden by ") + libcrtx_colored_player_name(EventPlayer()) + StringToText("."));
+			libapex_write_text(PlayerGroupAll(), StringToText("The map has been hidden by ") + libapex_colored_player_name(EventPlayer()) + StringToText("."));
 		}
 	}
 	return true;	
 }
 
 
-bool libcrtx_command_smarthostile(bool check, bool run)
+void libapex_command_smarthostile(void check, void run)
 {
 	string race;
-	race = StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 2 );
-	if( libcrtx_admin_getpermissions( EventPlayer() ) < libcrtx_admin_permissionlevel_moderator && !libcrtx_command_allowed(EventPlayer(), StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 1))) {
+	race = StringWord( libapex_chat_get_parse_line(EventPlayer()), 2 );
+	if( libapex_admin_getpermissions( EventPlayer() ) < libapex_admin_permissionlevel_moderator && !libapex_command_allowed(EventPlayer(), StringWord(libapex_chat_get_parse_line(EventPlayer()), 1))) {
 		return true;
 	}
 	race = StringCase(race, false);
 
 	if( race == "terran" ) { 
-		libcrtx_ai_set_race(libcrtx_race_terran);
-		libcrtx_write_text(PlayerGroupAll(), StringToText("Smart Hostile computer has been set to " + race + " by ") + libcrtx_colored_player_name(EventPlayer()) + StringToText("."));
+		libapex_ai_set_race(libapex_race_terran);
+		libapex_write_text(PlayerGroupAll(), StringToText("Smart Hostile computer has been set to " + race + " by ") + libapex_colored_player_name(EventPlayer()) + StringToText("."));
 	} else if( race == "zerg" ) {
-		libcrtx_ai_set_race(libcrtx_race_zerg);
-		libcrtx_write_text(PlayerGroupAll(), StringToText("Smart Hostile computer has been set to " + race + " by ") + libcrtx_colored_player_name(EventPlayer()) + StringToText("."));
+		libapex_ai_set_race(libapex_race_zerg);
+		libapex_write_text(PlayerGroupAll(), StringToText("Smart Hostile computer has been set to " + race + " by ") + libapex_colored_player_name(EventPlayer()) + StringToText("."));
 	} else if( race == "protoss" ) {
-		libcrtx_ai_set_race(libcrtx_race_protoss);
-		libcrtx_write_text(PlayerGroupAll(), StringToText("Smart Hostile computer has been set to " + race + " by ") + libcrtx_colored_player_name(EventPlayer()) + StringToText("."));
+		libapex_ai_set_race(libapex_race_protoss);
+		libapex_write_text(PlayerGroupAll(), StringToText("Smart Hostile computer has been set to " + race + " by ") + libapex_colored_player_name(EventPlayer()) + StringToText("."));
 	} else {
-		libcrtx_write(PlayerGroupSingle(EventPlayer()), "<c val=\"ff0000\">Unable to change smarthostile race</c>: No valid race specified.");
+		libapex_write(PlayerGroupSingle(EventPlayer()), "<c val=\"ff0000\">Unable to change smarthostile race</c>: No valid race specified.");
 	}
 	return true;
 }
 
-bool libcrtx_command_light(bool testConds, bool runActions)
+void libapex_command_light(void testConds, void runActions)
 {
-	string light = StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 2);
+	string light = StringWord(libapex_chat_get_parse_line(EventPlayer()), 2);
 	fixed blendTime = StringToFixed(StringWord(EventChatMessage(false), 3));
 	
-	if( libcrtx_admin_getpermissions( EventPlayer() ) < libcrtx_admin_permissionlevel_moderator  && !libcrtx_command_allowed(EventPlayer(), StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 1)))
+	if( libapex_admin_getpermissions( EventPlayer() ) < libapex_admin_permissionlevel_moderator  && !libapex_command_allowed(EventPlayer(), StringWord(libapex_chat_get_parse_line(EventPlayer()), 1)))
 	{
 		return true;
 	}
@@ -257,14 +245,14 @@ bool libcrtx_command_light(bool testConds, bool runActions)
 		light = GameTerrainSet();
 	}
 	
-	light = libcrtx_param_catalog(c_gameCatalogLight, light);
+	light = libapex_param_catalog(c_gameCatalogLight, light);
 	if(light == null)
 	{
-		libcrtx_write(PlayerGroupSingle(EventPlayer()), "<c val=\"ff0000\">Unable to change lighting</c>: No such light exists.");
+		libapex_write(PlayerGroupSingle(EventPlayer()), "<c val=\"ff0000\">Unable to change lighting</c>: No such light exists.");
 		return true;
 	}
 
-	if(StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 3) == "")
+	if(StringWord(libapex_chat_get_parse_line(EventPlayer()), 3) == "")
 	{
 		blendTime = 2;
 	}
@@ -274,9 +262,9 @@ bool libcrtx_command_light(bool testConds, bool runActions)
 	return true;
 }
 
-bool libcrtx_command_fog(bool testConds, bool runActions)
+void libapex_command_fog(void testConds, void runActions)
 {
-	string state = StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 2 );
+	string state = StringWord(libapex_chat_get_parse_line(EventPlayer()), 2 );
 	string paramOne;
 	string paramTwo;
 	string paramThree;
@@ -284,13 +272,13 @@ bool libcrtx_command_fog(bool testConds, bool runActions)
 	fixed green;
 	fixed blue;
 
-	if( libcrtx_admin_getpermissions( EventPlayer() ) < libcrtx_admin_permissionlevel_moderator && !libcrtx_command_allowed(EventPlayer(), StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 1))) {
+	if( libapex_admin_getpermissions( EventPlayer() ) < libapex_admin_permissionlevel_moderator && !libapex_command_allowed(EventPlayer(), StringWord(libapex_chat_get_parse_line(EventPlayer()), 1))) {
 		return true;
 	}
 	
-	paramOne = StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 3);
-	paramTwo = StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 4);
-	paramThree = StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 5);
+	paramOne = StringWord(libapex_chat_get_parse_line(EventPlayer()), 3);
+	paramTwo = StringWord(libapex_chat_get_parse_line(EventPlayer()), 4);
+	paramThree = StringWord(libapex_chat_get_parse_line(EventPlayer()), 5);
 
 	if(state == "off")
 	{ 
@@ -302,9 +290,9 @@ bool libcrtx_command_fog(bool testConds, bool runActions)
 	}
 	else if(state == "color")
 	{
-		red = libcrtx_boundsFixed(StringToFixed(paramOne), 0, 255) * 100 / 255;
-		green = libcrtx_boundsFixed(StringToFixed(paramTwo), 0, 255) * 100 / 255;
-		blue = libcrtx_boundsFixed(StringToFixed(paramThree), 0, 255) * 100 / 255;
+		red = libapex_boundsFixed(StringToFixed(paramOne), 0, 255) * 100 / 255;
+		green = libapex_boundsFixed(StringToFixed(paramTwo), 0, 255) * 100 / 255;
+		blue = libapex_boundsFixed(StringToFixed(paramThree), 0, 255) * 100 / 255;
 		FogSetColor(Color(red, green, blue));
 	}
 	else if(state == "density")
@@ -321,18 +309,18 @@ bool libcrtx_command_fog(bool testConds, bool runActions)
 	}
 	else
 	{
-		libcrtx_write( PlayerGroupSingle(EventPlayer()), "Usage: !fog {on|off|color|density|height|falloff} [value]");
+		libapex_write( PlayerGroupSingle(EventPlayer()), "Usage: !fog {on|off|color|density|height|falloff} [value]");
 	}
 	return true;
 }
 
-bool libcrtx_command_creepspeed(bool testConds, bool runActions)
+void libapex_command_creepspeed(void testConds, void runActions)
 { 
 	string state;
 	fixed speed;
-	state = StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 2);
-	speed = StringToFixed(StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 3));
-	if( libcrtx_admin_getpermissions(EventPlayer()) < libcrtx_admin_permissionlevel_moderator && !libcrtx_command_allowed(EventPlayer(), StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 1)))
+	state = StringWord(libapex_chat_get_parse_line(EventPlayer()), 2);
+	speed = StringToFixed(StringWord(libapex_chat_get_parse_line(EventPlayer()), 3));
+	if( libapex_admin_getpermissions(EventPlayer()) < libapex_admin_permissionlevel_moderator && !libapex_command_allowed(EventPlayer(), StringWord(libapex_chat_get_parse_line(EventPlayer()), 1)))
 	{
 		return true;
 	}
@@ -352,21 +340,21 @@ bool libcrtx_command_creepspeed(bool testConds, bool runActions)
 		speed = StringToFixed(state);
 		if(state == "")
 		{
-			libcrtx_write( PlayerGroupSingle(EventPlayer()), "Usage: !creepspeed [growth/decay/blend] <speed>");
+			libapex_write( PlayerGroupSingle(EventPlayer()), "Usage: !creepspeed [growth/decay/blend] <speed>");
 			return true;
 		}
 		CreepSetSpeed(c_creepSpeedGrowth, speed);
 		CreepSetSpeed(c_creepSpeedDecay, speed);
 		CreepSetSpeed(c_creepSpeedBlend, speed);
 	}
-	libcrtx_write_text(PlayerGroupAll(),  StringToText("Creep speed has been set to ") +
-		FixedToText(speed, 0) + StringToText(" by ") + libcrtx_colored_player_name(EventPlayer()));
+	libapex_write_text(PlayerGroupAll(),  StringToText("Creep speed has been set to ") +
+		FixedToText(speed, 0) + StringToText(" by ") + libapex_colored_player_name(EventPlayer()));
 	return true;	
 }
 
-bool[libcrtx_max_players] libcrtx_command_trolls_used;
+void[libapex_max_players] libapex_command_trolls_used;
 
-bool libcrtx_command_trolls(bool testConds, bool runActions)
+void libapex_command_trolls(void testConds, void runActions)
 {
 	playergroup p = PlayerGroupAll();
 	unitgroup g;
@@ -375,8 +363,8 @@ bool libcrtx_command_trolls(bool testConds, bool runActions)
 	int curPlayer;
 	text playerName;
 	int flaggedUnits;
-	bool foundAny;
-	bool unitFlagged;
+	void foundAny;
+	void unitFlagged;
 	string alert;
 	string unitType;
 
@@ -396,28 +384,28 @@ bool libcrtx_command_trolls(bool testConds, bool runActions)
 	int damageAddScaled;
 	fixed rangeBonus;
 	fixed attackMultiplier;
-	bool isUnkillable;
-	bool isUntargetable;
+	void isUnkillable;
+	void isUntargetable;
 	int lagCount;
 	int creepMakers;
 
-	string param = StringCase(StringWord(libcrtx_chat_get_parse_line
+	string param = StringCase(StringWord(libapex_chat_get_parse_line
 		(EventPlayer()), 2), false);
 
-	if( libcrtx_admin_getpermissions( EventPlayer() ) < libcrtx_admin_permissionlevel_moderator && !libcrtx_command_allowed(EventPlayer(), StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 1)) ) {
+	if( libapex_admin_getpermissions( EventPlayer() ) < libapex_admin_permissionlevel_moderator && !libapex_command_allowed(EventPlayer(), StringWord(libapex_chat_get_parse_line(EventPlayer()), 1)) ) {
 		return true;
 	}
 
 	if(param == "off" || param == "disabled")
 	{
-		libcrtx_command_trolldetection[EventPlayer()] = false;
-		libcrtx_write_success("Troll notifications are now disabled.");
+		libapex_command_trolldetection[EventPlayer()] = false;
+		libapex_write_success("Troll notifications are now disabled.");
 		return true;
 	}
 	else if(param == "on" || param == "enabled")
 	{
-		libcrtx_command_trolldetection[EventPlayer()] = true;
-		libcrtx_write_success("Troll notifications are now enabled.");
+		libapex_command_trolldetection[EventPlayer()] = true;
+		libapex_write_success("Troll notifications are now enabled.");
 		return true;
 	}
 	
@@ -428,9 +416,9 @@ bool libcrtx_command_trolls(bool testConds, bool runActions)
 		lagCount = 0;
 		creepMakers = 0;
 		curPlayer = PlayerGroupLoopCurrent();
-		playerName = libcrtx_colored_player_name(curPlayer) +
-			libcrtx_color_text_by_player(curPlayer, StringToText(" (" +
-			libcrtx_color_from_player(curPlayer) + ")"));
+		playerName = libapex_colored_player_name(curPlayer) +
+			libapex_color_text_by_player(curPlayer, StringToText(" (" +
+			libapex_color_from_player(curPlayer) + ")"));
 		g = UnitGroup(null, curPlayer, RegionEntireMap(),
 			UnitFilter(0, 0, 0, 0), 0);
 
@@ -507,7 +495,7 @@ bool libcrtx_command_trolls(bool testConds, bool runActions)
 				{
 					unitFlagged = true;
 					alert = " has a " + unitType + " with a ChangelingDisguise.";
-					libcrtx_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
+					libapex_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
 				}
 
 				if(unitType != "Hive" && unitType != "Lair" &&
@@ -620,7 +608,7 @@ bool libcrtx_command_trolls(bool testConds, bool runActions)
 						alert = alert + "untargetable ";
 					}
 					alert = alert + unitType + " which does " + IntToString(damage * FixedToInt(period)) + " damage per second.";
-					libcrtx_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
+					libapex_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
 				}
 				else if(damage * penalty >= 1000)
 				{
@@ -639,7 +627,7 @@ bool libcrtx_command_trolls(bool testConds, bool runActions)
 						alert = alert + "untargetable ";
 					}
 					alert = alert + unitType + " which does " + IntToString(damage) + " damage.";
-					libcrtx_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
+					libapex_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
 				}
 				else if(range >= 50)
 				{
@@ -658,7 +646,7 @@ bool libcrtx_command_trolls(bool testConds, bool runActions)
 						alert = alert + "untargetable ";
 					}
 					alert = alert + unitType + " with " +	FixedToString(range, 1) + " range.";
-					libcrtx_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
+					libapex_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
 				}
 
 				// Categorize the unit's threat level based on its health
@@ -681,7 +669,7 @@ bool libcrtx_command_trolls(bool testConds, bool runActions)
 						alert = alert + "untargetable ";
 					}
 					alert = alert + unitType + " with " + IntToString(life) + " total health.";
-					libcrtx_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
+					libapex_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
 				}
 
 				// Categorize the unit's threat level based on its height
@@ -702,7 +690,7 @@ bool libcrtx_command_trolls(bool testConds, bool runActions)
 						alert = alert + "untargetable ";
 					}
 					alert = alert + unitType + " with " + FixedToString(UnitGetHeight(UnitGroupLoopCurrent()), 1) + " height.";
-					libcrtx_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
+					libapex_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
 				}
 
 				i = i - 1;
@@ -735,7 +723,7 @@ bool libcrtx_command_trolls(bool testConds, bool runActions)
 						alert = alert + "untargetable ";
 					}
 					alert = alert + unitType + " that is not visible.";
-					libcrtx_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
+					libapex_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
 				}
 			}
 
@@ -760,7 +748,7 @@ bool libcrtx_command_trolls(bool testConds, bool runActions)
 					alert = alert + "untargetable ";
 				}
 				alert = alert + unitType + " with a lethal vortex.";
-				libcrtx_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
+				libapex_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
 			}
 
 			if(unitFlagged)
@@ -787,19 +775,19 @@ bool libcrtx_command_trolls(bool testConds, bool runActions)
 			else if(count >= 72)
 			{
 				alert = " has " + IntToString(count) + " " + unitType + " units.";
-				libcrtx_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
+				libapex_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
 			}
 			else if(count >= 24 && StringToFixed(CatalogFieldValueGet(
 				c_gameCatalogUnit, unitType, "ScoreMake", curPlayer)) >= 500)
 			{
 				alert = " has " + IntToString(count) + " " + unitType + " units.";
-				libcrtx_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
+				libapex_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
 			}
 			else if(count >= 12 && StringToFixed(CatalogFieldValueGet(
 				c_gameCatalogUnit, unitType, "ScoreMake", curPlayer)) >= 1000)
 			{
 				alert = " has " + IntToString(count) + " " + unitType + " units.";
-				libcrtx_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
+				libapex_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
 			}
 			else if(count >= 8 && (unitType == "Hyperion" ||
 				unitType == "DrakkenLaserDrill" ||
@@ -837,7 +825,7 @@ bool libcrtx_command_trolls(bool testConds, bool runActions)
 				))
 			{
 				alert = " has " + IntToString(count) + " " + unitType + " units.";
-				libcrtx_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
+				libapex_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
 			}
 
 			i = i - 1;
@@ -846,19 +834,19 @@ bool libcrtx_command_trolls(bool testConds, bool runActions)
 		if(lagCount >= 2)
 		{
 			alert = " has " + IntToString(lagCount) + " units that create lag.";
-			libcrtx_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
+			libapex_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
 		}
 
 		if(flaggedUnits >= 10)
 		{
 			alert = " has " + IntToString(flaggedUnits) + " questionable units.";
-			libcrtx_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
+			libapex_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
 		}
 
 		if(creepMakers >= 20)
 		{
 			alert = " has " + IntToString(creepMakers) + " units that make creep.";
-			libcrtx_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
+			libapex_write_text(PlayerGroupSingle(EventPlayer()), playerName + StringToText(alert));
 		}
 
 		if(flaggedUnits > 0)
@@ -872,7 +860,7 @@ bool libcrtx_command_trolls(bool testConds, bool runActions)
 
 	if(foundAny == false)
 	{
-		if(libcrtx_command_trolls_used[EventPlayer()] == false)
+		if(libapex_command_trolls_used[EventPlayer()] == false)
 		{
 			HelpPanelAddTip(PlayerGroupSingle(EventPlayer()),
 				StringToText("!trolls command"),
@@ -885,195 +873,195 @@ bool libcrtx_command_trolls(bool testConds, bool runActions)
 				"It is enabled for hosts and moderators only."),
 				StringToText("The !trolls command"),
 				"Assets\\Textures\\btn-ability-terran-nuclearstrike-color.dds");
-			libcrtx_command_trolls_used[EventPlayer()] = true;
+			libapex_command_trolls_used[EventPlayer()] = true;
 		}
-		libcrtx_write(PlayerGroupSingle(EventPlayer()), "No threatening units were found.");
+		libapex_write(PlayerGroupSingle(EventPlayer()), "No threatening units were found.");
 	}
 
 	return true;
 }
 
-bool libcrtx_command_log(bool checkConds, bool runActions)
+void libapex_command_log(void checkConds, void runActions)
 {
 	int plr = -1;
-	string val = StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 2 );
-	plr = libcrtx_color_to_player( val );
+	string val = StringWord( libapex_chat_get_parse_line(EventPlayer()), 2 );
+	plr = libapex_color_to_player( val );
 	
-	if( libcrtx_admin_getpermissions( EventPlayer() ) < libcrtx_admin_permissionlevel_moderator && !libcrtx_command_allowed(EventPlayer(), StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 1))) {
+	if( libapex_admin_getpermissions( EventPlayer() ) < libapex_admin_permissionlevel_moderator && !libapex_command_allowed(EventPlayer(), StringWord(libapex_chat_get_parse_line(EventPlayer()), 1))) {
 		return true;
 	}
 	
 	if( plr != -1 )
 	{
-		libcrtx_write_text(PlayerGroupSingle(EventPlayer()), libcrtx_log_getlog(plr));
+		libapex_write_text(PlayerGroupSingle(EventPlayer()), libapex_log_getlog(plr));
 	} else {
-		libcrtx_write_text(PlayerGroupSingle(EventPlayer()), libcrtx_log_getgloballog());
+		libapex_write_text(PlayerGroupSingle(EventPlayer()), libapex_log_getgloballog());
 	}
 	return true;
 }
 
-bool libcrtx_command_secure(bool checkConds, bool runActions)
+void libapex_command_secure(void checkConds, void runActions)
 {
 	string onoff = "ON";
-	string params = StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 2);
-	if( libcrtx_admin_getpermissions( EventPlayer() ) < libcrtx_admin_permissionlevel_admin && !libcrtx_command_allowed(EventPlayer(), StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 1))) {
+	string params = StringWord( libapex_chat_get_parse_line(EventPlayer()), 2);
+	if( libapex_admin_getpermissions( EventPlayer() ) < libapex_admin_permissionlevel_admin && !libapex_command_allowed(EventPlayer(), StringWord(libapex_chat_get_parse_line(EventPlayer()), 1))) {
 		return true;
 	}
 	
 	if(params == "on") {
-		libcrtx_secure_mode = true;
+		libapex_secure_mode = true;
 	} else if( params == "off") {
-		libcrtx_secure_mode = false;
+		libapex_secure_mode = false;
 	} else {
-		libcrtx_secure_mode = !libcrtx_secure_mode;
+		libapex_secure_mode = !libapex_secure_mode;
 	}
 	
-	if( !libcrtx_secure_mode ) {
+	if( !libapex_secure_mode ) {
 		onoff = "OFF";
 	}
 	
-	libcrtx_write(PlayerGroupSingle(EventPlayer()), "Cortex Secure Mode is now " + onoff + ". When Secure Mode is disabled, players can use potentially dangerous commands that can disrupt gameplay easily and without warning. Only disable secure mode with players you trust, or promote those whom you do trust.");
+	libapex_write(PlayerGroupSingle(EventPlayer()), "Cortex Secure Mode is now " + onoff + ". When Secure Mode is disabled, players can use potentially dangerous commands that can disrupt gameplay easily and without warning. Only disable secure mode with players you trust, or promote those whom you do trust.");
 	return true;
 }
-bool libcrtx_command_setting(bool checkConds, bool runActions)
+void libapex_command_setting(void checkConds, void runActions)
 {
-	string setting = StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 2);
+	string setting = StringWord( libapex_chat_get_parse_line(EventPlayer()), 2);
 	fixed val;
 	const string settingList = "maxspawncount||maxspawnrate||spawnperiod||spawntimeout||minscale||maxscale";
 	
-	if( libcrtx_admin_getpermissions( EventPlayer() ) < libcrtx_admin_permissionlevel_admin && !libcrtx_command_allowed(EventPlayer(), StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 1)) ) {
+	if( libapex_admin_getpermissions( EventPlayer() ) < libapex_admin_permissionlevel_admin && !libapex_command_allowed(EventPlayer(), StringWord(libapex_chat_get_parse_line(EventPlayer()), 1)) ) {
 		return true;
 	}
 	
-	if(StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 2) == "") {
-		libcrtx_write(PlayerGroupSingle(EventPlayer()), "Usage:");
-		libcrtx_write(PlayerGroupSingle(EventPlayer()), "!setting " + settingList + " val");
-		libcrtx_write(PlayerGroupSingle(EventPlayer()), "To list current settings: !setting list");
+	if(StringWord( libapex_chat_get_parse_line(EventPlayer()), 2) == "") {
+		libapex_write(PlayerGroupSingle(EventPlayer()), "Usage:");
+		libapex_write(PlayerGroupSingle(EventPlayer()), "!setting " + settingList + " val");
+		libapex_write(PlayerGroupSingle(EventPlayer()), "To list current settings: !setting list");
 		return true;
 	}
-	if(StringEqual(StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 2), "list", false)) {
-		libcrtx_write(PlayerGroupSingle(EventPlayer()), "maxspawncount: " + IntToString(libcrtx_setting_getint(libcrtx_setting_int_maxspawncount)));
-		libcrtx_write(PlayerGroupSingle(EventPlayer()), "maxspawnrate (#/spawnperiod): " + IntToString(libcrtx_setting_getint(libcrtx_setting_int_maxspawnrate)));
-		libcrtx_write(PlayerGroupSingle(EventPlayer()), "spawnperiod (in seconds): " + IntToString(libcrtx_setting_getint(libcrtx_setting_int_spawnperiod)));
-		libcrtx_write(PlayerGroupSingle(EventPlayer()), "spawntimeout: " + IntToString(libcrtx_setting_getint(libcrtx_setting_int_spawntimeout)));
-		libcrtx_write(PlayerGroupSingle(EventPlayer()), "minscale: " + FixedToString(libcrtx_setting_getfixed(libcrtx_setting_fixed_minscale), c_fixedPrecisionAny));
-		libcrtx_write(PlayerGroupSingle(EventPlayer()), "maxscale: " + FixedToString(libcrtx_setting_getfixed(libcrtx_setting_fixed_maxscale), c_fixedPrecisionAny));
+	if(StringEqual(StringWord( libapex_chat_get_parse_line(EventPlayer()), 2), "list", false)) {
+		libapex_write(PlayerGroupSingle(EventPlayer()), "maxspawncount: " + IntToString(libapex_setting_getint(libapex_setting_int_maxspawncount)));
+		libapex_write(PlayerGroupSingle(EventPlayer()), "maxspawnrate (#/spawnperiod): " + IntToString(libapex_setting_getint(libapex_setting_int_maxspawnrate)));
+		libapex_write(PlayerGroupSingle(EventPlayer()), "spawnperiod (in seconds): " + IntToString(libapex_setting_getint(libapex_setting_int_spawnperiod)));
+		libapex_write(PlayerGroupSingle(EventPlayer()), "spawntimeout: " + IntToString(libapex_setting_getint(libapex_setting_int_spawntimeout)));
+		libapex_write(PlayerGroupSingle(EventPlayer()), "minscale: " + FixedToString(libapex_setting_getfixed(libapex_setting_fixed_minscale), c_fixedPrecisionAny));
+		libapex_write(PlayerGroupSingle(EventPlayer()), "maxscale: " + FixedToString(libapex_setting_getfixed(libapex_setting_fixed_maxscale), c_fixedPrecisionAny));
 		return true;
 	}
 	
 	if(StringEqual(setting, "maxspawncount", false)) {
-		if(StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 3) == "" || StringToFixed(StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 3)) <= 0) {
+		if(StringWord( libapex_chat_get_parse_line(EventPlayer()), 3) == "" || StringToFixed(StringWord( libapex_chat_get_parse_line(EventPlayer()), 3)) <= 0) {
 			val = 24;
 		}
 		else {
-			val = StringToFixed(StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 3));
+			val = StringToFixed(StringWord( libapex_chat_get_parse_line(EventPlayer()), 3));
 		}
 		
-		if(val > IntToFixed(libcrtx_setting_getint(libcrtx_setting_int_maxspawnrate))) {
-			libcrtx_write_error("maxspawncount cannot be greater than maxspawnrate");
+		if(val > IntToFixed(libapex_setting_getint(libapex_setting_int_maxspawnrate))) {
+			libapex_write_error("maxspawncount cannot be greater than maxspawnrate");
 			return true;
 		}
 		
-		libcrtx_setting_setint(libcrtx_setting_int_maxspawncount, FixedToInt(val));
-		libcrtx_write_success(StringCase(setting, false) + " set to " + FixedToString(val, 0));
+		libapex_setting_setint(libapex_setting_int_maxspawncount, FixedToInt(val));
+		libapex_write_success(StringCase(setting, false) + " set to " + FixedToString(val, 0));
 		return true;
 	}
 	if(StringEqual(setting, "maxspawnrate", false)) {
-		if(StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 3) == "" || StringToFixed(StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 3)) <= 0) {
+		if(StringWord( libapex_chat_get_parse_line(EventPlayer()), 3) == "" || StringToFixed(StringWord( libapex_chat_get_parse_line(EventPlayer()), 3)) <= 0) {
 			val = 100;
 		}
 		else {
-			val = StringToFixed(StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 3));
+			val = StringToFixed(StringWord( libapex_chat_get_parse_line(EventPlayer()), 3));
 		}
 		
-		if(val < IntToFixed(libcrtx_setting_getint(libcrtx_setting_int_maxspawncount))) {
-			libcrtx_write_error("maxspawnrate cannot be less than maxspawncount");
+		if(val < IntToFixed(libapex_setting_getint(libapex_setting_int_maxspawncount))) {
+			libapex_write_error("maxspawnrate cannot be less than maxspawncount");
 			return true;
 		}
 		
-		libcrtx_setting_setint(libcrtx_setting_int_maxspawnrate, FixedToInt(val));
-		libcrtx_write_success(StringCase(setting, false) + " set to " + FixedToString(val, 0));
+		libapex_setting_setint(libapex_setting_int_maxspawnrate, FixedToInt(val));
+		libapex_write_success(StringCase(setting, false) + " set to " + FixedToString(val, 0));
 		return true;
 	}
 	if(StringEqual(setting, "spawnperiod", false)) {
-		if(StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 3) == "" || StringToFixed(StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 3)) <= 0) {
+		if(StringWord( libapex_chat_get_parse_line(EventPlayer()), 3) == "" || StringToFixed(StringWord( libapex_chat_get_parse_line(EventPlayer()), 3)) <= 0) {
 			val = 60;
 		}
 		else {
-			val = StringToFixed(StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 3));
+			val = StringToFixed(StringWord( libapex_chat_get_parse_line(EventPlayer()), 3));
 		}
-		libcrtx_setting_setint(libcrtx_setting_int_spawnperiod, FixedToInt(val));
-		libcrtx_write_success(StringCase(setting, false) + " set to " + FixedToString(val, 0));
+		libapex_setting_setint(libapex_setting_int_spawnperiod, FixedToInt(val));
+		libapex_write_success(StringCase(setting, false) + " set to " + FixedToString(val, 0));
 		return true;
 	}
 	if(StringEqual(setting, "spawntimeout", false)) {
-		if(StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 3) == "" || StringToFixed(StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 3)) <= 0) {
+		if(StringWord( libapex_chat_get_parse_line(EventPlayer()), 3) == "" || StringToFixed(StringWord( libapex_chat_get_parse_line(EventPlayer()), 3)) <= 0) {
 			val = 30;
 		}
 		else {
-			val = StringToFixed(StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 3));
+			val = StringToFixed(StringWord( libapex_chat_get_parse_line(EventPlayer()), 3));
 		}
-		libcrtx_setting_setint(libcrtx_setting_int_spawntimeout, FixedToInt(val));
-		libcrtx_write_success(StringCase(setting, false) + " set to " + FixedToString(val, 0));
+		libapex_setting_setint(libapex_setting_int_spawntimeout, FixedToInt(val));
+		libapex_write_success(StringCase(setting, false) + " set to " + FixedToString(val, 0));
 		return true;
 	}
 	if(StringEqual(setting, "minscale", false)) {
-		if(StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 3) == "" || StringToFixed(StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 3)) <= 0) {
+		if(StringWord( libapex_chat_get_parse_line(EventPlayer()), 3) == "" || StringToFixed(StringWord( libapex_chat_get_parse_line(EventPlayer()), 3)) <= 0) {
 			val = 0.05;
 		}
 		else {
-			val = StringToFixed(StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 3));
+			val = StringToFixed(StringWord( libapex_chat_get_parse_line(EventPlayer()), 3));
 		}
 		
-		if(val > libcrtx_setting_getfixed(libcrtx_setting_fixed_maxscale)) {
-			libcrtx_write_error("minscale cannot be greater than maxscale");
+		if(val > libapex_setting_getfixed(libapex_setting_fixed_maxscale)) {
+			libapex_write_error("minscale cannot be greater than maxscale");
 			return true;
 		}
 		
-		libcrtx_setting_setfixed(libcrtx_setting_fixed_minscale, val);
-		libcrtx_write_success(StringCase(setting, false) + " set to " + FixedToString(val, 4));	
+		libapex_setting_setfixed(libapex_setting_fixed_minscale, val);
+		libapex_write_success(StringCase(setting, false) + " set to " + FixedToString(val, 4));	
 		return true;
 	}
 	if(StringEqual(setting, "maxscale", false)) {
-		if(StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 3) == "" || StringToFixed(StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 3)) <= 0) {
+		if(StringWord( libapex_chat_get_parse_line(EventPlayer()), 3) == "" || StringToFixed(StringWord( libapex_chat_get_parse_line(EventPlayer()), 3)) <= 0) {
 			val = 10.0;
 		}
 		else {
-			val = StringToFixed(StringWord( libcrtx_chat_get_parse_line(EventPlayer()), 3));
+			val = StringToFixed(StringWord( libapex_chat_get_parse_line(EventPlayer()), 3));
 		}
 		
-		if(val < libcrtx_setting_getfixed(libcrtx_setting_fixed_minscale)) {
-			libcrtx_write_error("maxscale cannot be less than minscale");
+		if(val < libapex_setting_getfixed(libapex_setting_fixed_minscale)) {
+			libapex_write_error("maxscale cannot be less than minscale");
 			return true;
 		}
 		
-		libcrtx_setting_setfixed(libcrtx_setting_fixed_maxscale, val);
-		libcrtx_write_success(StringCase(setting, false) + " set to " + FixedToString(val, 4));
+		libapex_setting_setfixed(libapex_setting_fixed_maxscale, val);
+		libapex_write_success(StringCase(setting, false) + " set to " + FixedToString(val, 4));
 		return true;
 	}
 	
 	return true;
 }
-bool libcrtx_command_fruit(bool testConds, bool runActions)
+void libapex_command_fruit(void testConds, void runActions)
 {
 	int count;
 	string amsgFruit;
 	const string fruits = "Apple Banana Cherry Grape Lemon Orange Pear Pineapple Strawberry Watermelon WatermelonSmall";
 	
-	if( libcrtx_admin_getpermissions( EventPlayer() ) < libcrtx_admin_permissionlevel_admin && !libcrtx_command_allowed(EventPlayer(), StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 1)) ) {
+	if( libapex_admin_getpermissions( EventPlayer() ) < libapex_admin_permissionlevel_admin && !libapex_command_allowed(EventPlayer(), StringWord(libapex_chat_get_parse_line(EventPlayer()), 1)) ) {
 		return true;
 	}
 	
-	if(StringEqual(StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 2), "remove", false)) {
+	if(StringEqual(StringWord(libapex_chat_get_parse_line(EventPlayer()), 2), "remove", false)) {
 		libNtve_gf_SendActorMessageToGameRegionWithFilters(RegionEntireMap(), c_actorIntersectAgainstCenter, "Destroy", "Model", "IsStatus isFruit 1");
 		return true;
 	}
 	
-	if(StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 2) == "") {
+	if(StringWord(libapex_chat_get_parse_line(EventPlayer()), 2) == "") {
 		count = 500;
 	}
 	else {
-		count = StringToInt(StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 2));
+		count = StringToInt(StringWord(libapex_chat_get_parse_line(EventPlayer()), 2));
 	}
 	while(count > 0) {
 		amsgFruit = StringWord(fruits, RandomInt(1, 11));
@@ -1084,130 +1072,130 @@ bool libcrtx_command_fruit(bool testConds, bool runActions)
 		count -= 1;
 	}
 	
-	libcrtx_write(PlayerGroupSingle(EventPlayer()), "Type !fruit remove to be less fruity.");
+	libapex_write(PlayerGroupSingle(EventPlayer()), "Type !fruit remove to be less fruity.");
 	
 	return true;
 }
-bool libcrtx_command_xml(bool testConds, bool runActions)
+void libapex_command_xml(void testConds, void runActions)
 {
-	string param = StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 2);
+	string param = StringWord(libapex_chat_get_parse_line(EventPlayer()), 2);
 	
-	if( libcrtx_admin_getpermissions( EventPlayer() ) < libcrtx_admin_permissionlevel_admin && !libcrtx_command_allowed(EventPlayer(), StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 1)) ) {
+	if( libapex_admin_getpermissions( EventPlayer() ) < libapex_admin_permissionlevel_admin && !libapex_command_allowed(EventPlayer(), StringWord(libapex_chat_get_parse_line(EventPlayer()), 1)) ) {
 		return true;
 	}
 	
 	if(StringEqual(param, "on", false)) {
-		libcrtx_setting_use_xml = true;
-		libcrtx_write(PlayerGroupSingle(EventPlayer()), "XML chat codes have been turned on");
+		libapex_setting_use_xml = true;
+		libapex_write(PlayerGroupSingle(EventPlayer()), "XML chat codes have been turned on");
 		return true;
 	}
 	else if(StringEqual(param, "off", false)) {
-		libcrtx_setting_use_xml = false;
-		libcrtx_write(PlayerGroupSingle(EventPlayer()), "XML chat codes have been turned off");
+		libapex_setting_use_xml = false;
+		libapex_write(PlayerGroupSingle(EventPlayer()), "XML chat codes have been turned off");
 		return true;
 	}
 	else if(StringEqual(param, "", false)) {
-		if(libcrtx_setting_use_xml) {
-			libcrtx_setting_use_xml = false;
-			libcrtx_write(PlayerGroupSingle(EventPlayer()), "XML chat codes have been turned off");
+		if(libapex_setting_use_xml) {
+			libapex_setting_use_xml = false;
+			libapex_write(PlayerGroupSingle(EventPlayer()), "XML chat codes have been turned off");
 			return true;
 		}
 		else {
-			libcrtx_setting_use_xml = true;
-			libcrtx_write(PlayerGroupSingle(EventPlayer()), "XML chat codes have been turned on");
+			libapex_setting_use_xml = true;
+			libapex_write(PlayerGroupSingle(EventPlayer()), "XML chat codes have been turned on");
 			return true;
 		}
 	}
 	
-	libcrtx_write(PlayerGroupSingle(EventPlayer()), "Type \"!xml on|off\" to turn XML coding on or off, or just type \"!xml\" to toggle it.");
+	libapex_write(PlayerGroupSingle(EventPlayer()), "Type \"!xml on|off\" to turn XML coding on or off, or just type \"!xml\" to toggle it.");
 	return true;
 }
-string libcrtx_soundtrack_music_current = "(default)";
-string libcrtx_soundtrack_ambience_current = "(default)";
-bool libcrtx_command_soundtrack(bool testConds, bool runActions) //!soundtrack [name] [ambience|music]
+string libapex_soundtrack_music_current = "(default)";
+string libapex_soundtrack_ambience_current = "(default)";
+void libapex_command_soundtrack(void testConds, void runActions) //!soundtrack [name] [ambience|music]
 {
 	string soundtrack;
 	string option;
 	
-	if( libcrtx_admin_getpermissions( EventPlayer() ) < libcrtx_admin_permissionlevel_moderator && !libcrtx_command_allowed(EventPlayer(), StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 1)) ) {
+	if( libapex_admin_getpermissions( EventPlayer() ) < libapex_admin_permissionlevel_moderator && !libapex_command_allowed(EventPlayer(), StringWord(libapex_chat_get_parse_line(EventPlayer()), 1)) ) {
 		return true;
 	}
 	
-	if(StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 2) != "") {
-		soundtrack = StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 2);
+	if(StringWord(libapex_chat_get_parse_line(EventPlayer()), 2) != "") {
+		soundtrack = StringWord(libapex_chat_get_parse_line(EventPlayer()), 2);
 	}
 	else {
-		libcrtx_write(PlayerGroupSingle(EventPlayer()), "Current soundtrack: " + libcrtx_soundtrack_music_current + " | Current ambience: " + libcrtx_soundtrack_ambience_current);
-		libcrtx_write(PlayerGroupSingle(EventPlayer()), "Syntax is !soundtrack [name] [\"ambience\" or \"music\" (default)] or !soundtrack stop [\"ambience\" or \"music\" (default)]");
+		libapex_write(PlayerGroupSingle(EventPlayer()), "Current soundtrack: " + libapex_soundtrack_music_current + " | Current ambience: " + libapex_soundtrack_ambience_current);
+		libapex_write(PlayerGroupSingle(EventPlayer()), "Syntax is !soundtrack [name] [\"ambience\" or \"music\" (default)] or !soundtrack stop [\"ambience\" or \"music\" (default)]");
 		return true;
 	}
 	
 	if(StringEqual(soundtrack, "reset", c_stringNoCase) || StringEqual(soundtrack, "stop", c_stringNoCase)) {
-		if(StringEqual(StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 3), "ambience", c_stringNoCase)) {
+		if(StringEqual(StringWord(libapex_chat_get_parse_line(EventPlayer()), 3), "ambience", c_stringNoCase)) {
 			SoundtrackStop(PlayerGroupAll(), c_soundtrackCategoryAmbience, true);
-			libcrtx_soundtrack_ambience_current = "none";
-			libcrtx_write(PlayerGroupSingle(EventPlayer()), "Ambience soundtrack stopped");
+			libapex_soundtrack_ambience_current = "none";
+			libapex_write(PlayerGroupSingle(EventPlayer()), "Ambience soundtrack stopped");
 		}
 		else {
 			SoundtrackStop(PlayerGroupAll(), c_soundtrackCategoryMusic, true);
-			libcrtx_soundtrack_music_current = "none";
-			libcrtx_write(PlayerGroupSingle(EventPlayer()), "Music soundtrack stopped");
+			libapex_soundtrack_music_current = "none";
+			libapex_write(PlayerGroupSingle(EventPlayer()), "Music soundtrack stopped");
 		}
 		return true;
 	}
 
-	soundtrack = libcrtx_param_catalog(c_gameCatalogSoundtrack, soundtrack);
+	soundtrack = libapex_param_catalog(c_gameCatalogSoundtrack, soundtrack);
 	if(soundtrack == null) {
-		libcrtx_write(PlayerGroupSingle(EventPlayer()), "<c val=\"ff0000\">Unable to play soundtrack</c>: No such soundtrack exists.");
+		libapex_write(PlayerGroupSingle(EventPlayer()), "<c val=\"ff0000\">Unable to play soundtrack</c>: No such soundtrack exists.");
 		return true;
 	}
 
-	if(StringEqual(StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 3), "ambience", c_stringNoCase)) {
+	if(StringEqual(StringWord(libapex_chat_get_parse_line(EventPlayer()), 3), "ambience", c_stringNoCase)) {
 		SoundtrackStop(PlayerGroupAll(), c_soundtrackCategoryAmbience, true);
 		SoundtrackPlay(PlayerGroupAll(), c_soundtrackCategoryAmbience, soundtrack, c_soundtrackCueAny, c_soundtrackIndexAny, true);
-		libcrtx_soundtrack_ambience_current = soundtrack;
-		libcrtx_write(PlayerGroupSingle(EventPlayer()), "Playing soundtrack: " + soundtrack);
+		libapex_soundtrack_ambience_current = soundtrack;
+		libapex_write(PlayerGroupSingle(EventPlayer()), "Playing soundtrack: " + soundtrack);
 	}
 	else {
 		SoundtrackStop(PlayerGroupAll(), c_soundtrackCategoryMusic, true);
 		SoundtrackPlay(PlayerGroupAll(), c_soundtrackCategoryMusic, soundtrack, c_soundtrackCueAny, c_soundtrackIndexAny, true);
-		libcrtx_soundtrack_music_current = soundtrack;
-		libcrtx_write(PlayerGroupSingle(EventPlayer()), "Playing soundtrack: " + soundtrack);	
+		libapex_soundtrack_music_current = soundtrack;
+		libapex_write(PlayerGroupSingle(EventPlayer()), "Playing soundtrack: " + soundtrack);	
 	}
 
 	return true;
 }
-bool libcrtx_command_weather(bool testConds, bool runActions) //!weather off|rain|snow|hail|fog|mist|sandstorm|sun [density] [intensity (HDR)] #region
+void libapex_command_weather(void testConds, void runActions) //!weather off|rain|snow|hail|fog|mist|sandstorm|sun [density] [intensity (HDR)] #region
 {
 	int count;
 	int i;
-	string weather = StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 2);
-	string density = StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 3);
-	string HDR = StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 4);
+	string weather = StringWord(libapex_chat_get_parse_line(EventPlayer()), 2);
+	string density = StringWord(libapex_chat_get_parse_line(EventPlayer()), 3);
+	string HDR = StringWord(libapex_chat_get_parse_line(EventPlayer()), 4);
 	string rgnName;
 	region rgn;
 	const string weather_types = "rain snow hail fog mist sandstorm sun";
 	const string weather_model = "RainEmitterLarge Snow SnowLight WindEmitterBrownMedium FogMist WindRough Sunrays";
 	
-	if( libcrtx_admin_getpermissions( EventPlayer() ) < libcrtx_admin_permissionlevel_moderator && !libcrtx_command_allowed(EventPlayer(), StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 1)) ) {
+	if( libapex_admin_getpermissions( EventPlayer() ) < libapex_admin_permissionlevel_moderator && !libapex_command_allowed(EventPlayer(), StringWord(libapex_chat_get_parse_line(EventPlayer()), 1)) ) {
 		return true;
 	}
 	
 	if(weather == "") {
-		libcrtx_write(PlayerGroupSingle(EventPlayer()), "Usage: !weather rain|snow|hail|fog|mist|sandstorm|sun [amount (default: 25)] [HDR] #[region]");
+		libapex_write(PlayerGroupSingle(EventPlayer()), "Usage: !weather rain|snow|hail|fog|mist|sandstorm|sun [amount (default: 25)] [HDR] #[region]");
 		return true;
 	}
 	
 	else if(weather == "off") {
-		rgnName = StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 3); //if turning weather off, region is 2nd param
+		rgnName = StringWord(libapex_chat_get_parse_line(EventPlayer()), 3); //if turning weather off, region is 2nd param
 		if(StringSub(rgnName, 1, 1) != "#") {
 			rgn = RegionEntireMap();
 		}
 		else {
 			rgnName = StringSub(rgnName, 2, StringLength(rgnName));
-			if(DataTableValueExists(true, libcrtx_command_region_buildidentifier(rgnName) + "_link"))
+			if(DataTableValueExists(true, libapex_command_region_buildidentifier(rgnName) + "_link"))
 			{
-				rgn = DataTableGetRegion(true, libcrtx_command_region_buildidentifier(rgnName) + "_link");
+				rgn = DataTableGetRegion(true, libapex_command_region_buildidentifier(rgnName) + "_link");
 			}
 			else
 			{
@@ -1216,7 +1204,7 @@ bool libcrtx_command_weather(bool testConds, bool runActions) //!weather off|rai
 
 			if(rgn == null)
 			{
-				libcrtx_write_error("No region with that name exists!");
+				libapex_write_error("No region with that name exists!");
 				return true;
 			}
 		}
@@ -1228,7 +1216,7 @@ bool libcrtx_command_weather(bool testConds, bool runActions) //!weather off|rai
 		return true;
 	}
 	
-	rgnName = StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 5);
+	rgnName = StringWord(libapex_chat_get_parse_line(EventPlayer()), 5);
 	
 	//search the string for the right weather
 	i = 1;
@@ -1240,7 +1228,7 @@ bool libcrtx_command_weather(bool testConds, bool runActions) //!weather off|rai
 		i += 1;
 	}
 	if(StringWord(weather_types, i) == "") {
-			libcrtx_write_error("Invalid weather type: valid types are " + weather_types);
+			libapex_write_error("Invalid weather type: valid types are " + weather_types);
 			return true;		
 	}
 	
@@ -1267,18 +1255,18 @@ bool libcrtx_command_weather(bool testConds, bool runActions) //!weather off|rai
 	}
 	else {
 		rgnName = StringSub(rgnName, 2, StringLength(rgnName));
-		if(DataTableValueExists(true, libcrtx_command_region_buildidentifier(rgnName) + "_link"))
+		if(DataTableValueExists(true, libapex_command_region_buildidentifier(rgnName) + "_link"))
 		{
-			rgn = DataTableGetRegion(true, libcrtx_command_region_buildidentifier(rgnName) + "_link");
+			rgn = DataTableGetRegion(true, libapex_command_region_buildidentifier(rgnName) + "_link");
 		}
 		else
 		{
-			rgn = DataTableGetRegion(true, libcrtx_command_region_buildidentifier(rgnName));
+			rgn = DataTableGetRegion(true, libapex_command_region_buildidentifier(rgnName));
 		}
 
 		if(rgn == null)
 		{
-			libcrtx_write_error("No region with that name exists!");
+			libapex_write_error("No region with that name exists!");
 			return true;
 		}
 	}
@@ -1303,42 +1291,42 @@ bool libcrtx_command_weather(bool testConds, bool runActions) //!weather off|rai
 
 	return true;
 }
-bool libcrtx_command_mapbounds(bool testConds, bool runActions) 
+void libapex_command_mapbounds(void testConds, void runActions) 
 {
 	region rgn;
-	string rgnName = StringWord(libcrtx_chat_get_parse_line(EventPlayer()), 2);
+	string rgnName = StringWord(libapex_chat_get_parse_line(EventPlayer()), 2);
 	
 	if(rgnName == "" || StringEqual(rgnName, "reset", c_stringNoCase) ) { //reset bounds to default
 		RegionPlayableMapSet(RegionEntireMap());
 		CameraSetBounds(PlayerGroupAll(), RegionPlayableMap(), true);		
-		libcrtx_write_text(PlayerGroupAll(), StringToText("Map bounds set to default by ") + libcrtx_colored_player_name(EventPlayer()));
+		libapex_write_text(PlayerGroupAll(), StringToText("Map bounds set to default by ") + libapex_colored_player_name(EventPlayer()));
 		return true;
 	}
 	else if(StringSub(rgnName, 1, 1) != "#") {
-		libcrtx_write_error("Invalid region. Please enter region as #_____, so region \"home\" would be #home");		
+		libapex_write_error("Invalid region. Please enter region as #_____, so region \"home\" would be #home");		
 		return true;
 	}
 	else {
 		rgnName = StringSub(rgnName, 2, StringLength(rgnName));
-		if(DataTableValueExists(true, libcrtx_command_region_buildidentifier(rgnName) + "_link"))
+		if(DataTableValueExists(true, libapex_command_region_buildidentifier(rgnName) + "_link"))
 		{
-			rgn = DataTableGetRegion(true, libcrtx_command_region_buildidentifier(rgnName) + "_link");
+			rgn = DataTableGetRegion(true, libapex_command_region_buildidentifier(rgnName) + "_link");
 		}
 		else
 		{
-			rgn = DataTableGetRegion(true, libcrtx_command_region_buildidentifier(rgnName));
+			rgn = DataTableGetRegion(true, libapex_command_region_buildidentifier(rgnName));
 		}
 		if(rgn == null)
 		{
-			libcrtx_write_error("No region with that name exists!");
+			libapex_write_error("No region with that name exists!");
 			return true;
 		}
 	}
 	
     RegionPlayableMapSet(rgn);
     CameraSetBounds(PlayerGroupAll(), rgn, true);
-	libcrtx_write_success("Map bounds set to region \"" + rgnName + "\"");
-	libcrtx_write_text(PlayerGroupAll(), StringToText("Map bounds set by ") + libcrtx_colored_player_name(EventPlayer()));
-	libcrtx_write(PlayerGroupAll(), "Map bounds can be set to default with \"!mapbounds reset\"");
+	libapex_write_success("Map bounds set to region \"" + rgnName + "\"");
+	libapex_write_text(PlayerGroupAll(), StringToText("Map bounds set by ") + libapex_colored_player_name(EventPlayer()));
+	libapex_write(PlayerGroupAll(), "Map bounds can be set to default with \"!mapbounds reset\"");
 	return true;
 }
